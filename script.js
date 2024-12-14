@@ -1,20 +1,38 @@
 // NOTE: minimize globals, use factory functions & IIFE's, prototype inheritance, Object.create(), Scope & Closure, private vs public
-    const log = console.log
+const log = console.log
 
-// initializze gameboard as array 
-const Gameboard = (function () {
-    const initializeGameboard = [];
-    return function () {
-        return initializeGameboard;
+// initializze gameboard as array - IIFE wrapped Factory Function
+const gameBoardX = (function() {
+
+    const boardArrayX = [];
+
+    for (let i = 0; i < 9; i++) {
+        let number = 1;
+        let positionArray = [];
+        while(number < 10) {
+            const squareNumber = `square${number}`;
+            positionArray.push(squareNumber);
+            number++;
+        }
+        const square = positionArray[i];
+        const gameBoardPosition = boardArrayX[i];
+        const obj = {[square]: gameBoardPosition};
+        boardArrayX.push(obj);
     }
+
+    return function() {
+        return boardArrayX;
+    }
+
 })();
+
+log(gameBoardX)
 
 // factory function to create new players
 function Player(name, marker) {
     return {name, marker};
 }
-    
-    // example store players in objects
+    // example
     const player1 = Player("Jim", "Circle")
     log(player1)
 
