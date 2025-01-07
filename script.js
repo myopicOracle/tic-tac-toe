@@ -1,8 +1,19 @@
+// Global variables
+const gameBoardArray = []
+
 // Create player methods and properties
 class PlayMove {
     constructor(marker, position) {
         this.marker = marker
         this.position = position
+    }
+
+    _createMarker() {
+        
+    }
+
+    _addMarkerToArr() {
+        
     }
 }
 
@@ -23,26 +34,52 @@ class PlayerTwo extends PlayMove {
 
 // Create app gameplay logic
 class GameLogic {
+    anchor = document.querySelector("div.anchor")
+    gameBoard = document.createElement("div")
+    buttonPanel = document.createElement("div")
+    buttonOne = document.createElement("button")
+    buttonTwo = document.createElement("button")
+
     constructor() {
-        this.gameBoardArray = []
+        // this.gameBoardArray = [] // moved to global scope
         this._renderBoard()
         this._renderButtons()
+        this._playerOneChoice()
+        this._playerTwoChoice()
     }
 
     _renderBoard() {
-        const gameBoard = document.createElement("div")
+        this.gameBoard.setAttribute("class", "gameBoard")
+        this.gameBoard.innerHTML = `
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            <div class="blankTile gameBoard"></div>
+            `
+        this.anchor.appendChild(this.gameBoard)
     }
 
     _renderButtons() {
-        const buttonOne = document.createElement("button")
-        buttonOne.value = "PlayerOne"
+        this.buttonPanel.setAttribute("class", "buttonPanel")
+        
+        this.buttonOne.textContent = "Player 1 [X]"
+        this.buttonPanel.appendChild(this.buttonOne)
+        
+        this.buttonTwo.textContent = "Player 2 [O]"
+        this.buttonPanel.appendChild(this.buttonTwo)
 
-        const buttonTwo = document.createElement("button")
-        buttonTwo.value = "PlayerTwo"
+        this.anchor.appendChild(this.buttonPanel)
     }
 
     _playerOneChoice() {
-
+        this.buttonOne.addEventListener("click", (e) => {
+            e.target.someFunction()
+        })
     }
 
     _playerTwoChoice() {
