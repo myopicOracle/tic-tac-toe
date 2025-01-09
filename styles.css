@@ -1,8 +1,9 @@
 body {
-    height: 100vh;
     display: flex;
     flex-flow: column wrap;
+    height: 100vh;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5% 10%;
 }
 
 .gameBoard {
@@ -13,19 +14,19 @@ body {
     /* gap: 2px; */
     text-align: center;
     border: 4px solid purple;
-    padding: 4px;
-    margin: 5%;
+    /* padding: 4px; */
+    /* margin: 5%; */
 }
 
 .blankTile {
     color: black;
     font-size: 42px;
-    vertical-align: middle;
+    /* vertical-align: middle; */
     /* justify-items: center; */
     /* align-items: center; */
     /* text-align: center; */
     /* align-content: center; */
-    height: 70%;
+    height: 100%;
     border: 2px solid violet;
 }
 

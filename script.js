@@ -1,13 +1,12 @@
 // Global variables
 const gameBoardArray = []
-let position = 0;
-let playerMarker;
+let length = 0
 
 // Create player methods and properties
 class PlayMove {
-    constructor(marker, position) {
-        this.marker = marker
+    constructor(position, marker) {
         this.position = position
+        this.marker = marker
     }
 
     _createMarker() {
@@ -20,19 +19,19 @@ class PlayMove {
 }
 
 class PlayerOne extends PlayMove {
-    constructor(marker, position) {
-        super(marker, position)
+    constructor(position, marker) {
+        super(position, marker)
         this.playerMarker = "X"
     }
 }
 
-
 class PlayerTwo extends PlayMove {
-    constructor(marker, position) {
-        super(marker, position)
+    constructor(position, marker) {
+        super(position, marker)
         this.playerMarker = "O"
     }
 }
+
 
 // Create app gameplay logic
 class GameLogic {
@@ -54,13 +53,49 @@ class GameLogic {
     tile8 = document.getElementById("8")
     tile9 = document.getElementById("9")
 
+    // Private fields
+    #position;
+    #playerMarker;
+
+    // Player Logic
+    // playerOneMarker = "X"
+    // playerTwoMarker = "O"
+
     // Called immediately on page load
     constructor() {
+        // private class properties
+        this.#position
+        this.#playerMarker
+        // methods to call on page load
+        this._createBoard()
         this._renderBoard()
         this._renderButtons()
         this._playerOneChoice()
         this._playerTwoChoice()
         this._placeMarker()
+        this._checkFinalWin()
+    }
+
+    _createBoard() {
+
+        for (let i = 0; i < 9; i++) {
+            let number = 1;
+            let locationArray = [];
+            while(number < 10) {
+                const locationNumber = number;
+                locationArray.push(locationNumber);
+                number++;
+            }
+            const position = locationArray[i];
+            const marker = null;
+            const obj = {position, marker};
+            gameBoardArray.push(obj);
+        };
+        
+        console.log(gameBoardArray)
+
+        return gameBoardArray;
+    
     }
 
     _renderBoard() {
@@ -93,37 +128,74 @@ class GameLogic {
 
     _playerOneChoice() {
         this.buttonOne.addEventListener("click", () => {
-        playerMarker = "X"
-        alert(`Player One's Turn | Marker: ${playerMarker}`)
+        this.#playerMarker = "X"
+        alert(`Player One's Turn | Marker: ${this.#playerMarker}`)
         })
     }
     
     _playerTwoChoice() {
         this.buttonTwo.addEventListener("click", () => {
-        playerMarker = "O"
-        alert(`Player Two's Turn | Marker: ${playerMarker}`)
+        this.#playerMarker = "O"
+        alert(`Player Two's Turn | Marker: ${this.#playerMarker}`)
         })
     }
-    
+
     _placeMarker() {
         this.gameBoard.addEventListener("click", (e) => {
-            e.target.textContent = playerMarker;
-            console.log(playerMarker)
-            position++;
-            console.log(position)
-            const newMarker = new PlayMove(playerMarker, position)
+            e.target.textContent = this.#playerMarker
+            // console.log(this.#playerMarker)
+            this.#position = Number(e.target.getAttribute('id'))
+            // console.log(this.#position)
+            
+            const newMarker = new PlayMove(this.#position, this.#playerMarker)
             console.log(newMarker)
-            gameBoardArray.push(newMarker)
+            
+            gameBoardArray[this.#position - 1] = newMarker
             console.log(gameBoardArray)
+            
+            length++
+            // console.log(length)
+            this._checkWinAfterMove()
+
         })  
     }
 
-    _checkWinCondition() {
+    _checkWinAfterMove() {
+        if (length < 9) {
+            if (
+                ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[1].marker) && (gameBoardArray[1].marker !== null && gameBoardArray[1].marker === gameBoardArray[2].marker)) ||
+                ((gameBoardArray[3].marker !== null && gameBoardArray[3].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[5].marker)) ||
+                ((gameBoardArray[6].marker !== null && gameBoardArray[6].marker === gameBoardArray[7].marker) && (gameBoardArray[7].marker !== null && gameBoardArray[7].marker === gameBoardArray[8].marker)) ||
+                ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[3].marker) && (gameBoardArray[3].marker !== null && gameBoardArray[3].marker === gameBoardArray[6].marker)) ||
+                ((gameBoardArray[1].marker !== null && gameBoardArray[1].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[7].marker)) ||
+                ((gameBoardArray[2].marker !== null && gameBoardArray[2].marker === gameBoardArray[5].marker) && (gameBoardArray[5].marker !== null && gameBoardArray[5].marker === gameBoardArray[8].marker)) ||
+                ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[8].marker)) ||
+                ((gameBoardArray[2].marker !== null && gameBoardArray[2].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[6].marker))
+            ) { 
+                return this._declareWinner()
+            } 
+        }
+    }
 
+    _checkFinalWin() {
+        if (length >= 9) {
+            if (
+                ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[1].marker) && (gameBoardArray[1].marker !== null && gameBoardArray[1].marker === gameBoardArray[2].marker)) ||
+                ((gameBoardArray[3].marker !== null && gameBoardArray[3].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[5].marker)) ||
+                ((gameBoardArray[6].marker !== null && gameBoardArray[6].marker === gameBoardArray[7].marker) && (gameBoardArray[7].marker !== null && gameBoardArray[7].marker === gameBoardArray[8].marker)) ||
+                ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[3].marker) && (gameBoardArray[3].marker !== null && gameBoardArray[3].marker === gameBoardArray[6].marker)) ||
+                ((gameBoardArray[1].marker !== null && gameBoardArray[1].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[7].marker)) ||
+                ((gameBoardArray[2].marker !== null && gameBoardArray[2].marker === gameBoardArray[5].marker) && (gameBoardArray[5].marker !== null && gameBoardArray[5].marker === gameBoardArray[8].marker)) ||
+                ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[8].marker)) ||
+                ((gameBoardArray[2].marker !== null && gameBoardArray[2].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[6].marker))
+            ) { 
+                return this._declareWinner()
+            } else alert("There is no winner this round. Play Again!")
+        }
     }
 
     _declareWinner() {
-
+        alert("You Have Won The GAME!")
     }
 
     _resetGame() {
