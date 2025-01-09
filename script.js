@@ -57,10 +57,6 @@ class GameLogic {
     #position;
     #playerMarker;
 
-    // Player Logic
-    // playerOneMarker = "X"
-    // playerTwoMarker = "O"
-
     // Called immediately on page load
     constructor() {
         // private class properties
@@ -99,7 +95,8 @@ class GameLogic {
     }
 
     _renderBoard() {
-        this.gameBoard.setAttribute("class", "gameBoard")
+        this.gameBoard.setAttribute("class", "container gameBoard")
+        console.log(this.gameBoard)
         this.gameBoard.innerHTML = `
             <div id="1" class="blankTile gameBoard"></div>
             <div id="2" class="blankTile gameBoard"></div>
@@ -143,6 +140,8 @@ class GameLogic {
     _placeMarker() {
         this.gameBoard.addEventListener("click", (e) => {
             e.target.textContent = this.#playerMarker
+            // e.target.style.cssText = "color: pink; font-size: 64px; margin: 0 auto;" 
+            console.log(e.target)
             // console.log(this.#playerMarker)
             this.#position = Number(e.target.getAttribute('id'))
             // console.log(this.#position)
