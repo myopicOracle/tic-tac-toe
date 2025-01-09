@@ -1,5 +1,7 @@
 // Global variables
 const gameBoardArray = []
+let position = 0;
+let playerMarker;
 
 // Create player methods and properties
 class PlayMove {
@@ -52,18 +54,13 @@ class GameLogic {
     tile8 = document.getElementById("8")
     tile9 = document.getElementById("9")
 
-    // Player Logic
-    playerOneMarker = "X"
-    playerTwoMarker = "O"
-
     // Called immediately on page load
     constructor() {
-        this.marker = ""
         this._renderBoard()
         this._renderButtons()
-        this.buttonOne.addEventListener("click", this._playerOneChoice.bind(this))
-        this.buttonTwo.addEventListener("click", this._playerTwoChoice.bind(this))
-        this.gameBoard.addEventListener("click", this._placeMarker.bind(this))
+        this._playerOneChoice()
+        this._playerTwoChoice()
+        this._placeMarker()
     }
 
     _renderBoard() {
@@ -95,18 +92,29 @@ class GameLogic {
     }
 
     _playerOneChoice() {
-        this.marker = "X"
-        console.log(this.marker)
+        this.buttonOne.addEventListener("click", () => {
+        playerMarker = "X"
+        alert(`Player One's Turn | Marker: ${playerMarker}`)
+        })
     }
-
+    
     _playerTwoChoice() {
-        this.marker = "O"
-        console.log(this.marker)
+        this.buttonTwo.addEventListener("click", () => {
+        playerMarker = "O"
+        alert(`Player Two's Turn | Marker: ${playerMarker}`)
+        })
     }
     
     _placeMarker() {
         this.gameBoard.addEventListener("click", (e) => {
-            e.target.textContent = this.marker
+            e.target.textContent = playerMarker;
+            console.log(playerMarker)
+            position++;
+            console.log(position)
+            const newMarker = new PlayMove(playerMarker, position)
+            console.log(newMarker)
+            gameBoardArray.push(newMarker)
+            console.log(gameBoardArray)
         })  
     }
 
