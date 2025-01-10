@@ -37,11 +37,13 @@ class PlayerTwo extends PlayMove {
 class GameLogic {
     // Page structure DOM
     anchor = document.querySelector("div.anchor")
+    headerPanel = document.createElement("div")
     gameBoard = document.createElement("div")
     buttonPanel = document.createElement("div")
     buttonOne = document.createElement("button")
     buttonTwo = document.createElement("button")
     displayCurrentMarker = document.createElement("div")
+    resetGameButton = document.createElement("button")
 
     // Gameboard DOM
     tile1 = document.getElementById("1")
@@ -62,8 +64,9 @@ class GameLogic {
     constructor() {
         // private class properties
         this.#position
-        this.#playerMarker = ""
+        this.#playerMarker = "?"
         // methods to call on page load
+        this._renderHeaderPanel()
         this._createBoard()
         this._renderBoard()
         this._renderButtons()
@@ -71,6 +74,12 @@ class GameLogic {
         this._playerTwoChoice()
         this._placeMarker()
         this._checkFinalWin()
+    }
+
+    _renderHeaderPanel() {
+        this.headerPanel.textContent = "Let's Play Tic Tac Toe!"
+        this.headerPanel.setAttribute("class", "headerPanel")
+        this.anchor.appendChild(this.headerPanel)
     }
 
     _createBoard() {
@@ -178,7 +187,8 @@ class GameLogic {
                 ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[8].marker)) ||
                 ((gameBoardArray[2].marker !== null && gameBoardArray[2].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[6].marker))
             ) { 
-                return this._declareWinner()
+                this._declareWinner()
+                // alert("You Win!")
             } 
         }
     }
@@ -195,17 +205,30 @@ class GameLogic {
                 ((gameBoardArray[0].marker !== null && gameBoardArray[0].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[8].marker)) ||
                 ((gameBoardArray[2].marker !== null && gameBoardArray[2].marker === gameBoardArray[4].marker) && (gameBoardArray[4].marker !== null && gameBoardArray[4].marker === gameBoardArray[6].marker))
             ) { 
-                return this._declareWinner()
-            } else alert("There is no winner this round. Play Again!")
+                this._declareWinner()
+                // alert("You Win!")
+            } else {
+                this._noWinner()
+                // alert("No Winner.")
+            }
         }
     }
 
     _declareWinner() {
-        alert("You Have Won The GAME!")
+        if (this.#playerMarker === "X")
+            this.headerPanel.textContent = "Player 1 Won the Game!"
+        else if (this.#playerMarker === "O")
+            this.headerPanel.textContent = "Player 2 Won the Game!"
+        this.anchor.lastChild.remove()
+    }
+
+    _noWinner() {
+        this.headerPanel.textContent = "No winner. Play again?"
+        this.anchor.lastChild.remove()
     }
 
     _resetGame() {
-        
+        this.anchor.lastChild.remove()
     }
 }
 
