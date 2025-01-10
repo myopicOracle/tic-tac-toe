@@ -8,30 +8,7 @@ class PlayMove {
         this.position = position
         this.marker = marker
     }
-
-    _createMarker() {
-        
-    }
-
-    _addMarkerToArr() {
-        
-    }
 }
-
-class PlayerOne extends PlayMove {
-    constructor(position, marker) {
-        super(position, marker)
-        this.playerMarker = "X"
-    }
-}
-
-class PlayerTwo extends PlayMove {
-    constructor(position, marker) {
-        super(position, marker)
-        this.playerMarker = "O"
-    }
-}
-
 
 // Create app gameplay logic
 class GameLogic {
@@ -44,17 +21,6 @@ class GameLogic {
     buttonTwo = document.createElement("button")
     displayCurrentMarker = document.createElement("div")
     resetGameButton = document.createElement("button")
-
-    // Gameboard DOM
-    tile1 = document.getElementById("1")
-    tile2 = document.getElementById("2")
-    tile3 = document.getElementById("3")
-    tile4 = document.getElementById("4")
-    tile5 = document.getElementById("5")
-    tile6 = document.getElementById("6")
-    tile7 = document.getElementById("7")
-    tile8 = document.getElementById("8")
-    tile9 = document.getElementById("9")
 
     // Private fields
     #position;
@@ -74,6 +40,7 @@ class GameLogic {
         this._playerTwoChoice()
         this._placeMarker()
         this._checkFinalWin()
+        this._resetGame()
     }
 
     _renderHeaderPanel() {
@@ -156,22 +123,18 @@ class GameLogic {
     _placeMarker() {
         this.gameBoard.addEventListener("click", (e) => {
             e.target.textContent = this.#playerMarker
-            // e.target.style.cssText = "color: pink; font-size: 64px; margin: 0 auto;" 
             console.log(e.target)
-            // console.log(this.#playerMarker)
             this.#position = Number(e.target.getAttribute('id'))
-            // console.log(this.#position)
             
             const newMarker = new PlayMove(this.#position, this.#playerMarker)
             console.log(newMarker)
             
             gameBoardArray[this.#position - 1] = newMarker
             console.log(gameBoardArray)
-            
             length++
-            // console.log(length)
-            this._checkWinAfterMove()
 
+            this._checkWinAfterMove()
+            this._checkFinalWin()
         })  
     }
 
@@ -219,6 +182,7 @@ class GameLogic {
             this.headerPanel.textContent = "Player 1 Won the Game!"
         else if (this.#playerMarker === "O")
             this.headerPanel.textContent = "Player 2 Won the Game!"
+        this.headerPanel.style.backgroundColor = "darkorange"
 
         this.anchor.lastChild.remove()
         this.resetGameButton.setAttribute("class", "resetGame")
@@ -228,6 +192,7 @@ class GameLogic {
 
     _noWinner() {
         this.headerPanel.textContent = "No winner. Play again?"
+        this.headerPanel.style.backgroundColor = "darkgrey"
 
         this.anchor.lastChild.remove()
         this.resetGameButton.setAttribute("class", "resetGame")
@@ -236,7 +201,15 @@ class GameLogic {
     }
 
     _resetGame() {
-        this.anchor.lastChild.remove()
+        this.resetGameButton.addEventListener("click", (e) => {
+            e.target.remove()
+            this.headerPanel.style.backgroundColor = "violet"
+            this._renderHeaderPanel()
+            this._createBoard()
+            this._renderBoard()
+            this._renderButtons()
+            gameBoardArray = []
+        })   
     }
 }
 

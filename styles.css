@@ -11,7 +11,6 @@ body {
     align-items: center;
     height: 100%;
     margin: 0 auto;
-    border: 2px solid red;
 }
 
 .headerPanel {
@@ -68,7 +67,7 @@ button {
 
 .displayMarker {
     box-sizing: border-box;
-    color: aliceblue;
+    color: gold;
     background-color: purple;
     height: 55px;
     width: 55px;
