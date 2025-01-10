@@ -41,6 +41,7 @@ class GameLogic {
     buttonPanel = document.createElement("div")
     buttonOne = document.createElement("button")
     buttonTwo = document.createElement("button")
+    displayCurrentMarker = document.createElement("div")
 
     // Gameboard DOM
     tile1 = document.getElementById("1")
@@ -61,7 +62,7 @@ class GameLogic {
     constructor() {
         // private class properties
         this.#position
-        this.#playerMarker
+        this.#playerMarker = ""
         // methods to call on page load
         this._createBoard()
         this._renderBoard()
@@ -116,6 +117,10 @@ class GameLogic {
         
         this.buttonOne.textContent = "Player 1 [X]"
         this.buttonPanel.appendChild(this.buttonOne)
+
+        this.displayCurrentMarker.textContent = `${this.#playerMarker}`
+        this.displayCurrentMarker.setAttribute("class", "displayMarker")
+        this.buttonPanel.appendChild(this.displayCurrentMarker)
         
         this.buttonTwo.textContent = "Player 2 [O]"
         this.buttonPanel.appendChild(this.buttonTwo)
@@ -126,14 +131,16 @@ class GameLogic {
     _playerOneChoice() {
         this.buttonOne.addEventListener("click", () => {
         this.#playerMarker = "X"
-        alert(`Player One's Turn | Marker: ${this.#playerMarker}`)
+        this.displayCurrentMarker.textContent = this.#playerMarker
+        // alert(`Player One's Turn | Marker: ${this.#playerMarker}`)
         })
     }
     
     _playerTwoChoice() {
         this.buttonTwo.addEventListener("click", () => {
         this.#playerMarker = "O"
-        alert(`Player Two's Turn | Marker: ${this.#playerMarker}`)
+        this.displayCurrentMarker.textContent = this.#playerMarker
+        // alert(`Player Two's Turn | Marker: ${this.#playerMarker}`)
         })
     }
 

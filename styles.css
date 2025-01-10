@@ -17,8 +17,11 @@ body {
 }
 
 .blankTile.gameBoard {
-    color: red;
-    font-size: 42px;
+    color: magenta;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 136px;
+    /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+    font-weight: 900;
     line-height: 200px;
     height: 200px;
     border: 2px solid violet;
@@ -34,9 +37,24 @@ body {
 button {
     color: aliceblue;
     background-color: violet;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
-    padding: 20px 30px;
+    padding: 15px 25px;
     border: 4px solid purple;
     border-radius: 10px;
+}
+
+.displayMarker {
+    color: aliceblue;
+    background-color: purple;
+    height: 45px;
+    width: 45px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 700;
+    padding: 10px 10px;
+    border: 14px solid violet;
+    border-radius: 10px;
+    margin: 0 10px;
 }
