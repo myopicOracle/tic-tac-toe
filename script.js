@@ -219,12 +219,20 @@ class GameLogic {
             this.headerPanel.textContent = "Player 1 Won the Game!"
         else if (this.#playerMarker === "O")
             this.headerPanel.textContent = "Player 2 Won the Game!"
+
         this.anchor.lastChild.remove()
+        this.resetGameButton.setAttribute("class", "resetGame")
+        this.resetGameButton.textContent = "--- Play Again! ---"
+        this.anchor.appendChild(this.resetGameButton)
     }
 
     _noWinner() {
         this.headerPanel.textContent = "No winner. Play again?"
+
         this.anchor.lastChild.remove()
+        this.resetGameButton.setAttribute("class", "resetGame")
+        this.resetGameButton.textContent = "Play Again!"
+        this.anchor.appendChild(this.resetGameButton)    
     }
 
     _resetGame() {
